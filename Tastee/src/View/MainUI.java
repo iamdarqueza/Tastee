@@ -1,7 +1,9 @@
-package View;
+package view;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -12,7 +14,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.ScrollPaneConstants;
+import javax.swing.text.DefaultStyledDocument;
+
+import control.DocumentSizeFilter;
 
 public class MainUI extends JFrame
 {
@@ -22,8 +26,10 @@ public class MainUI extends JFrame
 			addFormSaveB;
 	private JTextField searchTF, recipeNameTF;
 	private JTextArea recipeDescTA, ingredientsTA, proceduresTA;
+	private JScrollPane recipeDescSP, ingredientsSP, proceduresSP;
+	private DefaultStyledDocument recipeDescDF, ingredientsDF, proceduresDF;
 	private Font searchFont, formFont;
-	
+
 	private MainHandler mHandler;
 
 	public MainUI()
@@ -58,6 +64,8 @@ public class MainUI extends JFrame
 		addFormResetB.addMouseListener(mHandler);
 		addFormSaveB.addMouseListener(mHandler);
 		
+		recipeNameTF.addKeyListener(mHandler);
+
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
@@ -65,7 +73,7 @@ public class MainUI extends JFrame
 		repaint();
 	}
 	
-	private class MainHandler implements MouseListener
+	private class MainHandler implements MouseListener, KeyListener
 	{
 		public void mouseClicked(MouseEvent e) 
 		{
@@ -168,31 +176,56 @@ public class MainUI extends JFrame
 			{
 				frameP.remove(mainP);
 				frameP.add(addFormP);
+				recipeNameTF.setText("(Enter Recipe Name)");
+				recipeDescTA.setText("(Enter Recipe Description)");
+				ingredientsTA.setText("(Enter Ingredients)");
+				proceduresTA.setText("(Enter Procedures)");
 				repaint();
 			}
 			else if(addMainCourseB==e.getSource())
 			{
 				frameP.remove(mainP);
 				frameP.add(addFormP);
+				recipeNameTF.setText("(Enter Recipe Name)");
+				recipeDescTA.setText("(Enter Recipe Description)");
+				ingredientsTA.setText("(Enter Ingredients)");
+				proceduresTA.setText("(Enter Procedures)");
 				repaint();
 			}
 			else if(addDessertB==e.getSource())
 			{
 				frameP.remove(mainP);
 				frameP.add(addFormP);
+				recipeNameTF.setText("(Enter Recipe Name)");
+				recipeDescTA.setText("(Enter Recipe Description)");
+				ingredientsTA.setText("(Enter Ingredients)");
+				proceduresTA.setText("(Enter Procedures)");
 				repaint();
 			}
 			else if(addSoupB==e.getSource())
 			{
 				frameP.remove(mainP);
 				frameP.add(addFormP);
+				recipeNameTF.setText("(Enter Recipe Name)");
+				recipeDescTA.setText("(Enter Recipe Description)");
+				ingredientsTA.setText("(Enter Ingredients)");
+				proceduresTA.setText("(Enter Procedures)");
 				repaint();
 			}
 			else if(addDrinksB==e.getSource())
 			{
 				frameP.remove(mainP);
 				frameP.add(addFormP);
+				recipeNameTF.setText("(Enter Recipe Name)");
+				recipeDescTA.setText("(Enter Recipe Description)");
+				ingredientsTA.setText("(Enter Ingredients)");
+				proceduresTA.setText("(Enter Procedures)");
 				repaint();
+			}
+			else if(addFormSaveB==e.getSource())
+			{
+				
+				System.out.println(ingredientsTA.getText());
 			}
 			else if(addFormBackB==e.getSource())
 			{
@@ -213,9 +246,26 @@ public class MainUI extends JFrame
 				frameP.add(mainP);
 				repaint();
 			}
+			else if(addFormResetB==e.getSource())
+			{
+				recipeNameTF.setText("(Enter Recipe Name)");
+				recipeDescTA.setText("(Enter Recipe Description)");
+				ingredientsTA.setText("(Enter Ingredients)");
+				proceduresTA.setText("(Enter Procedures)");
+				repaint();
+			}
 		}
 		public void mouseReleased(MouseEvent arg0) {
 			
+		}
+		public void keyPressed(KeyEvent arg0) {
+		}
+		public void keyReleased(KeyEvent arg0) {
+		}
+		public void keyTyped(KeyEvent e)
+		{	
+			if(recipeNameTF.getText().length()>=50)
+				e.consume();
 		}
 	}
 	
@@ -281,25 +331,50 @@ public class MainUI extends JFrame
 		addFormResetB = new JLabel(new ImageIcon(getClass().getResource("ResetButton.png")));
 		addFormSaveB = new JLabel(new ImageIcon(getClass().getResource("SaveRecipeButton.png")));
 		formFont = new Font("Century Gothic", Font.PLAIN, 15);
-		recipeNameTF = new JTextField("(Enter Recipe Name)",100);
+		//recipe text field
+		recipeNameTF = new JTextField(50);
 		recipeNameTF.setOpaque(false);
 		recipeNameTF.setBorder(null);
 		recipeNameTF.setFont(formFont);
-		recipeDescTA = new JTextArea("(Enter Recipe Description)");
+		//recipe description text area
+		recipeDescTA = new JTextArea();
 		recipeDescTA.setOpaque(false);
 		recipeDescTA.setFont(formFont);
 		recipeDescTA.setLineWrap(true);
 		recipeDescTA.setWrapStyleWord(true);
-		ingredientsTA = new JTextArea("(Enter Recipe Ingredients)");
+		recipeDescDF = new DefaultStyledDocument();
+		recipeDescDF.setDocumentFilter(new DocumentSizeFilter(1000));
+		recipeDescTA.setDocument(recipeDescDF);
+		recipeDescSP = new JScrollPane(recipeDescTA);
+		recipeDescSP.setOpaque(false);
+		recipeDescSP.getViewport().setOpaque(false);
+		recipeDescSP.setBorder(null);
+		//ingredients text area
+		ingredientsTA = new JTextArea();
 		ingredientsTA.setOpaque(false);
 		ingredientsTA.setFont(formFont);
 		ingredientsTA.setLineWrap(true);
 		ingredientsTA.setWrapStyleWord(true);
-		proceduresTA = new JTextArea("(Enter Recipe Procedures)");
+		ingredientsDF = new DefaultStyledDocument();
+		ingredientsDF.setDocumentFilter(new DocumentSizeFilter(1000));
+		ingredientsTA.setDocument(ingredientsDF);
+		ingredientsSP = new JScrollPane(ingredientsTA);
+		ingredientsSP.setOpaque(false);
+		ingredientsSP.getViewport().setOpaque(false);
+		ingredientsSP.setBorder(null);
+		//procedures text area
+		proceduresTA = new JTextArea();
 		proceduresTA.setOpaque(false);
 		proceduresTA.setFont(formFont);
 		proceduresTA.setLineWrap(true);
 		proceduresTA.setWrapStyleWord(true);
+		proceduresDF = new DefaultStyledDocument();
+		proceduresDF.setDocumentFilter(new DocumentSizeFilter(1000));
+		proceduresTA.setDocument(proceduresDF);
+		proceduresSP = new JScrollPane(proceduresTA);
+		proceduresSP.setOpaque(false);
+		proceduresSP.getViewport().setOpaque(false);
+		proceduresSP.setBorder(null);
 	}
 	
 	public void setComponentsBounds()
@@ -331,9 +406,9 @@ public class MainUI extends JFrame
 		addFormResetB.setBounds(740, 7, 111, 37);
 		addFormSaveB.setBounds(860, 7, 111, 37);
 		recipeNameTF.setBounds(43, 272, 255, 38);
-		recipeDescTA.setBounds(43, 340, 255, 120);
-		ingredientsTA.setBounds(335, 80, 260, 380);
-		proceduresTA.setBounds(630, 80, 335, 380);
+		recipeDescSP.setBounds(43, 340, 255, 120);
+		ingredientsSP.setBounds(335, 80, 260, 380);
+		proceduresSP.setBounds(630, 80, 335, 380);
 	}
 
 	public void addComponents()
@@ -360,9 +435,9 @@ public class MainUI extends JFrame
 		addFormP.add(addFormResetB);
 		addFormP.add(addFormSaveB);
 		addFormP.add(recipeNameTF);
-		addFormP.add(recipeDescTA);
-		addFormP.add(ingredientsTA);
-		addFormP.add(proceduresTA);
+		addFormP.add(recipeDescSP);
+		addFormP.add(ingredientsSP);
+		addFormP.add(proceduresSP);
 		addFormP.add(addFormBg);
 	}
 	
