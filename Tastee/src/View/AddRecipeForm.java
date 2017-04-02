@@ -1,4 +1,4 @@
-package View;
+/*package View;
 
 import javax.swing.JPanel;
 
@@ -25,4 +25,4 @@ public class AddRecipeForm extends MainUI
 	{
 		
 	}
-}
+}*/
