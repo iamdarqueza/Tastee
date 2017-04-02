@@ -44,7 +44,7 @@ public class MainUI extends JFrame
 		frameP.add(headerP);
 		frameP.add(mainP);
 		add(frameP);
-		
+
 		mHandler = new MainHandler();
 		searchB.addMouseListener(mHandler);
 		exitB.addMouseListener(mHandler);
@@ -63,22 +63,25 @@ public class MainUI extends JFrame
 		addFormBackB.addMouseListener(mHandler);
 		addFormResetB.addMouseListener(mHandler);
 		addFormSaveB.addMouseListener(mHandler);
-		
+		recipeNameTF.addMouseListener(mHandler);
+		recipeDescTA.addMouseListener(mHandler);
+		ingredientsTA.addMouseListener(mHandler);
+		proceduresTA.addMouseListener(mHandler);
+
 		recipeNameTF.addKeyListener(mHandler);
 
 		setLocationRelativeTo(null);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
-		setResizable(false);	
+		setResizable(false);
 		repaint();
 	}
-	
+
 	private class MainHandler implements MouseListener, KeyListener
 	{
-		public void mouseClicked(MouseEvent e) 
+		public void mouseClicked(MouseEvent e)
 		{
 		}
-		public void mouseEntered(MouseEvent e) 
+		public void mouseEntered(MouseEvent e)
 		{
 			if(searchB==e.getSource())
 				searchB.setIcon(new ImageIcon(getClass().getResource("SearchIcon2.png")));
@@ -111,7 +114,7 @@ public class MainUI extends JFrame
 			else if(addFormSaveB==e.getSource())
 				addFormSaveB.setIcon(new ImageIcon(getClass().getResource("SaveRecipeButton2.png")));
 		}
-		public void mouseExited(MouseEvent e) 
+		public void mouseExited(MouseEvent e)
 		{
 			if(searchB==e.getSource())
 				searchB.setIcon(new ImageIcon(getClass().getResource("SearchIcon.png")));
@@ -144,7 +147,7 @@ public class MainUI extends JFrame
 			else if(addFormSaveB==e.getSource())
 				addFormSaveB.setIcon(new ImageIcon(getClass().getResource("SaveRecipeButton.png")));
 		}
-		public void mousePressed(MouseEvent e) 
+		public void mousePressed(MouseEvent e)
 		{
 			if(exitB==e.getSource())
 			{
@@ -212,6 +215,26 @@ public class MainUI extends JFrame
 				proceduresTA.setText("(Enter Procedures)");
 				repaint();
 			}
+			else if(recipeNameTF==e.getSource())
+			{
+				if(recipeNameTF.getText().equals("(Enter Recipe Name)"))
+					recipeNameTF.setText("");
+			}
+			else if(recipeDescTA==e.getSource())
+			{
+				if(recipeDescTA.getText().equals("(Enter Recipe Description)"))
+					recipeDescTA.setText("");
+			}
+			else if(ingredientsTA==e.getSource())
+			{
+				if(ingredientsTA.getText().equals("(Enter Ingredients)"))
+					ingredientsTA.setText("");
+			}
+			else if(proceduresTA==e.getSource())
+			{
+				if(proceduresTA.getText().equals("(Enter Procedures)"))
+					proceduresTA.setText("");
+			}
 			else if(addDrinksB==e.getSource())
 			{
 				frameP.remove(mainP);
@@ -224,7 +247,7 @@ public class MainUI extends JFrame
 			}
 			else if(addFormSaveB==e.getSource())
 			{
-				
+
 				System.out.println(ingredientsTA.getText());
 			}
 			else if(addFormBackB==e.getSource())
@@ -256,19 +279,19 @@ public class MainUI extends JFrame
 			}
 		}
 		public void mouseReleased(MouseEvent arg0) {
-			
+
 		}
 		public void keyPressed(KeyEvent arg0) {
 		}
 		public void keyReleased(KeyEvent arg0) {
 		}
 		public void keyTyped(KeyEvent e)
-		{	
+		{
 			if(recipeNameTF.getText().length()>=50)
 				e.consume();
 		}
 	}
-	
+
 	public void setPanel()
 	{
 		frameP = new JPanel();
@@ -280,25 +303,25 @@ public class MainUI extends JFrame
 		headerP.setLayout(null);
 		headerP.setOpaque(false);
 		headerP.setBounds(0, 0, 1000, 221);
-		
+
 		mainP = new JPanel();
 		mainP.setLayout(null);
 		mainP.setOpaque(false);
 		mainP.setBounds(0, 221, 1000, 479);
-		
+
 		addRecipeP = new JPanel();
 		addRecipeP.setLayout(null);
 		addRecipeP.setOpaque(false);
 		addRecipeP.setBounds(860, 240, 150, 250);
-		
+
 		addFormP = new JPanel();
 		addFormP.setLayout(null);
 		addFormP.setOpaque(false);
 		addFormP.setBounds(0, 221, 1000, 479);
 	}
-	
+
 	public void setComponents()
-	{	
+	{
 		//header components
 		headerBg = new JLabel(new ImageIcon(getClass().getResource("HeaderBackground.png")));
 		searchTFL = new JLabel(new ImageIcon(getClass().getResource("SearchRectangle.png")));
@@ -310,7 +333,7 @@ public class MainUI extends JFrame
 		searchTF.setFont(searchFont);
 		searchTF.setForeground(Color.WHITE);
 		exitB = new JLabel(new ImageIcon(getClass().getResource("ExitButton.png")));
-		
+
 		//main components
 		mainBg = new JLabel(new ImageIcon(getClass().getResource("MainBg.png")));
 		appetizerB = new JLabel(new ImageIcon(getClass().getResource("AppetizerButton.png")));
@@ -324,7 +347,7 @@ public class MainUI extends JFrame
 		addDessertB = new JLabel(new ImageIcon(getClass().getResource("AddDessert.png")));
 		addSoupB = new JLabel(new ImageIcon(getClass().getResource("AddSoup.png")));
 		addDrinksB = new JLabel(new ImageIcon(getClass().getResource("AddDrinks.png")));
-		
+
 		//add recipe form components
 		addFormBg = new JLabel(new ImageIcon(getClass().getResource("AddRecipeBg.png")));
 		addFormBackB = new JLabel(new ImageIcon(getClass().getResource("BackButton.png")));
@@ -337,7 +360,7 @@ public class MainUI extends JFrame
 		recipeNameTF.setBorder(null);
 		recipeNameTF.setFont(formFont);
 		//recipe description text area
-		recipeDescTA = new JTextArea();
+		recipeDescTA = new JTextArea("");
 		recipeDescTA.setOpaque(false);
 		recipeDescTA.setFont(formFont);
 		recipeDescTA.setLineWrap(true);
@@ -350,7 +373,7 @@ public class MainUI extends JFrame
 		recipeDescSP.getViewport().setOpaque(false);
 		recipeDescSP.setBorder(null);
 		//ingredients text area
-		ingredientsTA = new JTextArea();
+		ingredientsTA = new JTextArea("");
 		ingredientsTA.setOpaque(false);
 		ingredientsTA.setFont(formFont);
 		ingredientsTA.setLineWrap(true);
@@ -363,7 +386,7 @@ public class MainUI extends JFrame
 		ingredientsSP.getViewport().setOpaque(false);
 		ingredientsSP.setBorder(null);
 		//procedures text area
-		proceduresTA = new JTextArea();
+		proceduresTA = new JTextArea("");
 		proceduresTA.setOpaque(false);
 		proceduresTA.setFont(formFont);
 		proceduresTA.setLineWrap(true);
@@ -376,7 +399,7 @@ public class MainUI extends JFrame
 		proceduresSP.getViewport().setOpaque(false);
 		proceduresSP.setBorder(null);
 	}
-	
+
 	public void setComponentsBounds()
 	{
 		//header components bounds
@@ -385,7 +408,7 @@ public class MainUI extends JFrame
 		searchB.setBounds(680, 143, 20, 20);
 		searchTF.setBounds(350, 135, 310, 38);
 		exitB.setBounds(910, 18, 60, 60);
-		
+
 		//main components bounds
 		mainBg.setBounds(0, 0, 1000, 479);
 		appetizerB.setBounds(50, 40, 279, 184);
@@ -399,7 +422,7 @@ public class MainUI extends JFrame
 		addDessertB.setBounds(8, 74, 106, 32);
 		addSoupB.setBounds(8, 106, 106, 32);
 		addDrinksB.setBounds(8, 138, 106, 32);
-		
+
 		//add recipe form components bounds
 		addFormBg.setBounds(0, 0, 1000, 479);
 		addFormBackB.setBounds(620, 7, 111, 37);
@@ -419,7 +442,7 @@ public class MainUI extends JFrame
 		headerP.add(searchTFL);
 		headerP.add(exitB);
 		headerP.add(headerBg);
-		
+
 		//add main components
 		mainP.add(appetizerB);
 		mainP.add(mainCourseB);
@@ -429,7 +452,7 @@ public class MainUI extends JFrame
 		mainP.add(addRecipeP);
 		addRecipeP.add(addRecipeB);
 		mainP.add(mainBg);
-		
+
 		//add recipe form components bounds
 		addFormP.add(addFormBackB);
 		addFormP.add(addFormResetB);
@@ -440,10 +463,9 @@ public class MainUI extends JFrame
 		addFormP.add(proceduresSP);
 		addFormP.add(addFormBg);
 	}
-	
-	public static void main(String[] args) 
+
+	public static void main(String[] args)
 	{
 		new MainUI();
 	}
-
 }

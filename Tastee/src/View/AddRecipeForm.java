@@ -2,9 +2,9 @@ package View;
 
 import javax.swing.JPanel;
 
-public class AddRecipeForm extends MainUI
+public class AddRecipeForm
 {
-	private JPanel frameP;
+	/*private JPanel frameP;
 	
 	public AddRecipeForm()
 	{
@@ -24,5 +24,5 @@ public class AddRecipeForm extends MainUI
 	public void addComponents()
 	{
 		
-	}
+	}*/
 }
